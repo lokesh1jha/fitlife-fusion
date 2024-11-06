@@ -42,7 +42,12 @@ export default function LoginForm() {
 	};
 
 	const handleSubmit = async (values: loginInput) => {
-		toast.promise(authenticate(values.email, values.password), {
+		const email = values.email;
+		const password = values.password;
+		toast.promise(signIn("credentials", {
+			email, password,
+			redirectTo: Routes.ONBOARDING,
+		  }), {
 			loading: "Logging in...",
 			success: "Logged in successfully",
 			error: "Failed to log in",

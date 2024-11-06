@@ -1,9 +1,9 @@
 "use server";
 
+import { signIn } from "@/auth";
 import { ResultCode } from "@/lib/metadata";
 // import { AuthError } from "next-auth";
 import { Routes } from "@/routes";
-import { signIn } from "next-auth/react";
 // import { DEFAULT_LOGIN_REDIRECT, Routes } from "@/routes";
 
 interface Result {
