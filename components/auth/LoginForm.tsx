@@ -12,7 +12,6 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Routes } from "@/routes";
 import { FaGoogle } from "react-icons/fa";
-import { authenticate } from "@/app/login/action";
 import { signIn } from "next-auth/react";
 
 const loginSchema = z.object({
