@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import Workouts from './workouts/page'
+import OneOnOneTraining from '@/components/dashboard/OneOnOneTraning'
+import Diet from '@/components/dashboard/Diet'
 
 export default function Dashboard() {
   const [activeSection, setActiveSection] = useState('dashboard')
@@ -14,11 +17,11 @@ export default function Dashboard() {
   const renderContent = () => {
     switch (activeSection) {
       case 'workouts':
-        return <div>Workouts Content</div>
+        return <Workouts />
       case 'training':
-        return <div>1:1 Training Content</div>
+        return <OneOnOneTraining />
       case 'diet':
-        return <div>Diet Content</div>
+        return <Diet />
       default:
         return (
           <>
