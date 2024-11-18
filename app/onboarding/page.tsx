@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Switch } from "@/components/ui/switch"
@@ -37,7 +36,7 @@ export default function OnboardingWizard() {
     const [currentStep, setCurrentStep] = useState(0)
     const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<FormData>()
     const onSubmit: SubmitHandler<FormData> = (data) => console.log(data)
-
+console.log("form errors", errors)
     const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))
     const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0))
 
@@ -192,7 +191,7 @@ export default function OnboardingWizard() {
                 return null
         }
     }
-
+    
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-900">
             <form onSubmit={handleSubmit(onSubmit)}>
