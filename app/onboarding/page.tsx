@@ -34,9 +34,9 @@ const steps = [
 
 export default function OnboardingWizard() {
     const [currentStep, setCurrentStep] = useState(0)
-    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<FormData>()
+    const { register, handleSubmit, watch, setValue, formState: {  } } = useForm<FormData>()
     const onSubmit: SubmitHandler<FormData> = (data) => console.log(data)
-console.log("form errors", errors)
+
     const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))
     const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0))
 
@@ -81,7 +81,6 @@ console.log("form errors", errors)
                                         id="height"
                                         type="number"
                                         {...register('height', { required: true, min: 0 })}
-                                        className="text-black flex-grow"
                                     />
                                     <Select onValueChange={(value) => setValue('heightUnit', value)}>
                                         <SelectTrigger id="heightUnit" className="text-black bg-white w-24">
@@ -101,7 +100,6 @@ console.log("form errors", errors)
                                         id="weight"
                                         type="number"
                                         {...register('weight', { required: true, min: 0 })}
-                                        className="text-black flex-grow"
                                     />
                                     <Select onValueChange={(value) => setValue('weightUnit', value)}>
                                         <SelectTrigger id="weightUnit" className="text-black bg-white w-24">
@@ -176,8 +174,17 @@ console.log("form errors", errors)
                     <CardContent>
                         <div className="grid w-full items-center gap-4">
                             <div className="flex flex-col space-y-1.5">
-                                <div className="flex items-center space-x-2">
-                                    <Switch id="termsAccepted" {...register('termsAccepted', { required: true })} className="data-[state=checked]:bg-green-500" />
+                                <div className="flex items-center space-x-2"
+                                onChange={(e) => {
+                                    // setValue('termsAccepted', e.target.checked)
+                                    //@ts-expect-error checked
+                                    if(e.target.checked)
+                                        setValue('termsAccepted', true)
+                                    else
+                                        setValue('termsAccepted', false)
+                                }}>
+                                    <Switch id="termsAccepted" {...register('termsAccepted', { required: true })} className="data-[state=checked]:bg-green-500" 
+                                     />
                                     <Label htmlFor="termsAccepted" className="font-bold">I accept all terms and conditions</Label>
                                 </div>
                                 <p className="text-sm text-gray-300">
@@ -193,8 +200,8 @@ console.log("form errors", errors)
     }
     
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-900">
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex min-h-screen items-center justify-center bg-gray-200">
+            <form onSubmit={handleSubmit(onSubmit)} >
                 <Card className="w-full max-w-md bg-gray-900 text-gray-100">
                     <CardHeader>
                         <CardTitle>FitLife Pro Onboarding</CardTitle>
