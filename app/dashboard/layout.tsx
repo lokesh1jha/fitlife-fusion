@@ -1,13 +1,28 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Dumbbell, MessageSquare, Utensils, Home, Menu } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  console.log("session", session)
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login')
+    }
+  }, [status, router])
+
+
+  if (status === 'loading') {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">

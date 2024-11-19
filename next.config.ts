@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['lh3.googleusercontent.com'], 
   },
+  productionBrowserSourceMaps: false,
+  reactStrictMode: true,
 };
 
 export default nextConfig;

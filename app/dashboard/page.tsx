@@ -1,7 +1,25 @@
 // import DashboardLayout from "./layout";
+'use client'
+
+import Profile from "@/components/dashboard/Profile";
+import OnboardingWizard from "@/components/onboarding/page";
+import { useState } from "react";
 
 export default function DashboardHome() {
+  const [onboardingCompleted, setOnboardingCompleted] = useState(false);
+
+  function handleOnboardingComplete() {
+    setOnboardingCompleted(true);
+  }
+
+  if(true) {
+    handleOnboardingComplete()
+  } 
   return (
-      <h3 className="text-gray-700 dark:text-gray-200 text-3xl font-medium mb-6">Welcome back, Jane!</h3>
+    <div>
+      {onboardingCompleted ?
+      <Profile />
+      : <OnboardingWizard />}
+    </div>
   )
 }

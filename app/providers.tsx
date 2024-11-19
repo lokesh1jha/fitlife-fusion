@@ -3,9 +3,16 @@
 import { SessionProvider } from 'next-auth/react'
 import { Toaster } from 'sonner';
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  return <SessionProvider>
-    <Toaster closeButton duration={3000} richColors />
-    {children}
-  </SessionProvider>
+interface ProvidersProps {
+  children: React.ReactNode;
+  session: any; // Adjust type as needed
+}
+
+export function Providers({ children, session }: ProvidersProps) {
+  return (
+    <SessionProvider session={session}>
+      <Toaster closeButton duration={3000} richColors />
+      {children}
+    </SessionProvider>
+  )
 }

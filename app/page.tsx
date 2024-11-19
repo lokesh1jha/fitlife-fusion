@@ -33,7 +33,7 @@ export default function LandingPage() {
                   Transform Your Body, Transform Your Life
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl dark:text-gray-400">
-                  Join FitLife Pro for personalized workouts, expert guidance, and a supportive community. Start your journey to a healthier you today.
+                  Join FitLife Fusion for personalized workouts, expert guidance, and a supportive community. Start your journey to a healthier you today.
                 </p>
               </div>
               <div className="space-x-4">
@@ -127,8 +127,8 @@ export default function LandingPage() {
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">Transformations That Inspire</h2>
             <div className="grid gap-6 lg:grid-cols-3 lg:gap-12">
               {[
-                { name: "Sarah M.", achievement: "Lost 30 lbs in 6 months", content: "FitLife Pro changed my life. The personalized workouts and nutrition plans made all the difference. I've never felt better!" },
-                { name: "John D.", achievement: "Marathon runner", content: "As a busy professional, FitLife Pro's flexibility is perfect. I can work out anytime, anywhere, and still get expert guidance." },
+                { name: "Sarah M.", achievement: "Lost 30 lbs in 6 months", content: "FitLife Fusion changed my life. The personalized workouts and nutrition plans made all the difference. I've never felt better!" },
+                { name: "John D.", achievement: "Marathon runner", content: "As a busy professional, FitLife Fusion's flexibility is perfect. I can work out anytime, anywhere, and still get expert guidance." },
                 { name: "Emily R.", achievement: "New mom", content: "The post-pregnancy program was exactly what I needed. It helped me regain my strength and confidence." },
               ].map((testimonial, index) => (
                 <motion.div
@@ -175,7 +175,7 @@ export default function LandingPage() {
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Ready to Transform Your Life?</h2>
                 <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl">
-                  Join FitLife Pro today and start your journey to a healthier, stronger you. Remember, your 7-day free trial awaits!
+                  Join FitLife Fusion today and start your journey to a healthier, stronger you. Remember, your 7-day free trial awaits!
                 </p>
               </div>
               <div className="space-x-4">

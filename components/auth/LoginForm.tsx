@@ -45,7 +45,7 @@ export default function LoginForm() {
 		const password = values.password;
 		toast.promise(signIn("credentials", {
 			email, password,
-			redirectTo: Routes.ONBOARDING,
+			callbackUrl: Routes.DASHBOARD,
 		  }), {
 			loading: "Logging in...",
 			success: "Logged in successfully",

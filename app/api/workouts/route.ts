@@ -6,7 +6,7 @@ import { authOptions } from '../../../auth/auth.config'
 const prisma = new PrismaClient()
 
 export async function GET(request: Request) {
-    console.log('GET /api/workouts', request)
+    console.log('GET /api/workouts', JSON.stringify(request).substring(0, 10))
   const session = await getServerSession(authOptions)
 
   if (!session || !session.user || !session.user.id) {
