@@ -28,13 +28,12 @@ type FormData = {
 const steps = [
     'Personal Information',
     'Fitness Profile',
-    'Health Information',
-    'Consent'
+    'Health Information & Consent',
 ]
 
 export default function OnboardingWizard() {
     const [currentStep, setCurrentStep] = useState(0)
-    const { register, handleSubmit, watch, setValue, formState: {  } } = useForm<FormData>()
+    const { register, handleSubmit, watch, setValue, formState: { } } = useForm<FormData>()
     const onSubmit: SubmitHandler<FormData> = (data) => console.log(data)
 
     const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))
@@ -117,7 +116,7 @@ export default function OnboardingWizard() {
                                 <div className="grid grid-cols-2 gap-2">
                                     {['Weight loss', 'Muscle gain', 'Endurance', 'Flexibility'].map((goal) => (
                                         <div key={goal} className="flex items-center space-x-2">
-                                            <Checkbox id={goal} {...register('fitnessGoals')} value={goal} className="border-white" />
+                                            <Checkbox id={goal} {...register('fitnessGoals')} value={goal} className="border-black" />
                                             <Label htmlFor={goal}>{goal}</Label>
                                         </div>
                                     ))}
@@ -149,7 +148,7 @@ export default function OnboardingWizard() {
                                 <div className="grid grid-cols-2 gap-2">
                                     {['Vegetarian', 'Vegan', 'Keto', 'Paleo', 'No restrictions'].map((diet) => (
                                         <div key={diet} className="flex items-center space-x-2">
-                                            <Checkbox id={diet} {...register('dietaryPreferences')} value={diet} className="border-white" />
+                                            <Checkbox id={diet} {...register('dietaryPreferences')} value={diet} className="border-black" />
                                             <Label htmlFor={diet}>{diet}</Label>
                                         </div>
                                     ))}
@@ -160,34 +159,27 @@ export default function OnboardingWizard() {
                                 <div className="grid grid-cols-2 gap-2">
                                     {['Diabetes', 'Hypertension', 'Heart disease', 'Asthma', 'None'].map((condition) => (
                                         <div key={condition} className="flex items-center space-x-2">
-                                            <Checkbox id={condition} {...register('medicalConditions')} value={condition} className="border-white" />
+                                            <Checkbox id={condition} {...register('medicalConditions')} value={condition} className="border-black" />
                                             <Label htmlFor={condition}>{condition}</Label>
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                        </div>
-                    </CardContent>
-                )
-            case 3:
-                return (
-                    <CardContent>
-                        <div className="grid w-full items-center gap-4">
                             <div className="flex flex-col space-y-1.5">
                                 <div className="flex items-center space-x-2"
-                                onChange={(e) => {
-                                    // setValue('termsAccepted', e.target.checked)
-                                    //@ts-expect-error checked
-                                    if(e.target.checked)
-                                        setValue('termsAccepted', true)
-                                    else
-                                        setValue('termsAccepted', false)
-                                }}>
-                                    <Switch id="termsAccepted" {...register('termsAccepted', { required: true })} className="data-[state=checked]:bg-green-500" 
-                                     />
+                                    onChange={(e) => {
+                                        // setValue('termsAccepted', e.target.checked)
+                                        //@ts-expect-error checked
+                                        if (e.target.checked)
+                                            setValue('termsAccepted', true)
+                                        else
+                                            setValue('termsAccepted', false)
+                                    }}>
+                                    <Switch id="termsAccepted" {...register('termsAccepted', { required: true })} className="data-[state=checked]:bg-green-500"
+                                    />
                                     <Label htmlFor="termsAccepted" className="font-bold">I accept all terms and conditions</Label>
                                 </div>
-                                <p className="text-sm text-gray-300">
+                                <p className="text-sm text-black">
                                     This app will guide you with your exercise and diet. We are not responsible for any injury or accident. Payments are non-refundable.
                                 </p>
                             </div>
@@ -198,14 +190,14 @@ export default function OnboardingWizard() {
                 return null
         }
     }
-    
+
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-200">
+        <div className="container mx-auto px-4 py-8">
             <form onSubmit={handleSubmit(onSubmit)} >
-                <Card className="w-full max-w-md bg-gray-900 text-gray-100">
+                <Card className="w-full max-w-2xl mx-auto  text-gray-900">
                     <CardHeader>
                         <CardTitle>FitLife Pro Onboarding</CardTitle>
-                        <CardDescription className="text-gray-300">Step {currentStep + 1} of {steps.length}: {steps[currentStep]}</CardDescription>
+                        <CardDescription className="text-gray-900">Step {currentStep + 1} of {steps.length}: {steps[currentStep]}</CardDescription>
                     </CardHeader>
                     {renderStep()}
                     <CardFooter className="flex justify-between">
