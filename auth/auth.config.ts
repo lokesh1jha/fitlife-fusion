@@ -4,8 +4,11 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { getUser } from '@/db/users';
 import { getStringFromBuffer } from '@/lib/metadata';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import prisma from '@/db';
 
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,

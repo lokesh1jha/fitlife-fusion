@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,7 +6,6 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 
 model Account {
   id                 String  @id @default(cuid())
@@ -33,57 +26,99 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@map("account")
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
 
 
 model User {
-  id            String    @id @default(cuid())
-  
-  name          String?
-  bio           String?
-  email         String    @unique
-  publicEmail   Boolean?
-  salt          String?
-  password      String?
-  emailVerified DateTime?
-  image         String?
-  isOnboarded   Boolean   @default(false)
-  isOnTrial     Boolean   @default(true)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id                 String            @id @default(cuid())
+  name               String?
+  bio                String?
+  email              String            @unique
+  publicEmail        Boolean?
+  salt               String?
+  password           String?
+  emailVerified      DateTime?
+  role               Role              @default(USER)
+  image              String?
+  isOnboarded        Boolean           @default(false)
+  isOnTrial          Boolean           @default(true)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  refCode            String?
+  customRefCode      String?
+  streetAddress      String?
+  city               String?
+  state              String?
+  postalCode         String?
+  country            String?
+  currency           String?
+  socialLink         SocialLink?
+  accounts           Account[]
+  workouts           Workout[]
+  subscriptionPlan   SubscriptionPlan? @relation(fields: [subscriptionPlanId], references: [id])
+  subscriptionPlanId Int?
+  trialEndsAt        DateTime?
+  credits            UserCredits?
+  workoutPlans       WorkoutPlan[]
+  dietPlans          DietPlan[]
+  meetings           Meeting[]         @relation("UserMeetings")
+  trainings          Meeting[]         @relation("TrainerMeetings")
+  payments           Payment[]
 
-  refCode       String?
-  customRefCode String?
-  streetAddress String?
-  city          String?
-  state         String?
-  postalCode    String?
-  country       String?
-  currency      String?
-  // orders        Order[]
-  socialLink    SocialLink?
-  accounts      Account[]
- 
-  sessions      Session[]
-  workouts      Workout[]
+  goal                 String?
+  experienceLevel      String?
+  preferredDaysPerWeek Int?
 
   @@map("users")
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+model SocialLink {
+  id        Int      @id @default(autoincrement())
+  userId    String   @unique
+  facebook  String?
+  instagram String?
+  twitter   String?
+  linkedin  String?
+  youtube   String?
+  tiktok    String?
+  github    String?
+  website   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@unique([identifier, token])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("socialLink")
+}
+
+model SubscriptionPlan {
+  id            Int      @id @default(autoincrement())
+  name          String
+  description   String?
+  pricePerMonth Decimal  @db.Decimal(10, 2)
+  credits       Int
+  maxMeetings   Int
+  maxDietPlans  Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  users User[]
+
+  @@map("subscriptionPlan")
+}
+
+model UserCredits {
+  id        Int      @id @default(autoincrement())
+  userId    String   @unique
+  credits   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("userCredits")
 }
 
 model Workout {
@@ -95,52 +130,129 @@ model Workout {
   user        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
+
   @@map("workout")
 }
 
+model WorkoutPlan {
+  id          Int                   @id @default(autoincrement())
+  userId      String
+  user        User                  @relation(fields: [userId], references: [id])
+  name        String
+  daysPerWeek Int
+  exercises   WorkoutPlanExercise[]
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
 
-model SocialLink {
-  id           String   @id @default(cuid())
-  instagramUrl String?
-  twitterUrl   String?
-  githubUrl    String?
-  discordUrl   String?
-  userId       String   @unique // Ensuring one-to-one relationship
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  @@map("social_links")
+  @@map("workoutPlan")
 }
 
+model WorkoutPlanExercise {
+  id              Int      @id @default(autoincrement())
+  workoutPlanId   Int
+  exerciseId      Int
+  dayOfWeek       Int
+  sets            Int
+  reps            Int
+  restTimeSeconds Int
+  createdAt       DateTime @default(now())
 
-enum OrderStatus {
-  PENDING
-  COMPLETED
-  CANCELLED
+  workoutPlan WorkoutPlan @relation(fields: [workoutPlanId], references: [id])
+  exercise    Exercise    @relation(fields: [exerciseId], references: [id])
+
+  @@map("workoutPlanExercise")
 }
 
+model Exercise {
+  id                   Int                   @id @default(autoincrement())
+  name                 String
+  bodyPart             String?
+  category             String?
+  difficulty           String?
+  equipmentRequired    String?
+  instructions         String?
+  videoUrl             String?
+  workoutPlanExercises WorkoutPlanExercise[]
+  createdAt            DateTime              @default(now())
 
-model NewsletterEmails {
+  @@map("exercise")
+}
+
+model DietPlan {
+  id             Int            @id @default(autoincrement())
+  userId         String
+  user           User           @relation(fields: [userId], references: [id])
+  name           String
+  goal           String?
+  meals          DietPlanMeal[]
+  caloriesPerDay Int
+  proteinGrams   Int
+  carbsGrams     Int
+  fatsGrams      Int
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@map("dietPlan")
+}
+
+model DietPlanMeal {
   id           Int      @id @default(autoincrement())
-  email        String   @unique
-  isNotified   Boolean  @default(false)
+  dietPlanId   Int
+  mealType     String
+  name         String
+  description  String?
+  calories     Int
+  proteinGrams Int
+  carbsGrams   Int
+  fatsGrams    Int
   createdAt    DateTime @default(now())
 
-  @@map("newsletter_emails")
+  dietPlan DietPlan @relation(fields: [dietPlanId], references: [id])
+
+  @@map("dietPlanMeal")
 }
 
-model PromoCode {
-  id          String   @id @default(cuid())
-  code        String   @unique
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  expiryDate  DateTime
-  discount    Int
-  maxUses     Int
-  description String
+model Meeting {
+  id              Int      @id @default(autoincrement())
+  userId          String
+  trainerId       String
+  scheduledAt     DateTime
+  durationMinutes Int
+  status          MeetingStatus @default(PENDING)
+  creditsUsed     Int
+  notes           String?
+  createdAt       DateTime @default(now())
 
-  @@map("promo_codes")
+  user    User @relation("UserMeetings", fields: [userId], references: [id])
+  trainer User @relation("TrainerMeetings", fields: [trainerId], references: [id])
+
+  @@map("meeting")
 }
 
+enum MeetingStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  COMPLETED
+}
+
+model Payment {
+  id               Int      @id @default(autoincrement())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  amount           Decimal  @db.Decimal(10, 2)
+  paymentMethod    String
+  creditsPurchased Int
+  transactionId    String?
+  status           String
+  createdAt        DateTime @default(now())
+
+  @@map("payment")
+}
+
+
+enum Role {
+  USER
+  TRAINER
+  ADMIN
+}
