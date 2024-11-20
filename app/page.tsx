@@ -10,13 +10,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { motion } from "framer-motion"
+import { FlipWordsTitle } from '@/components/landing/FlipWordsTitle'
 
 export default function LandingPage() {
   // const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
   console.log(scrollY)
   useEffect(() => {
-    if ( typeof window === 'undefined' ) return
+    if (typeof window === 'undefined') return
     const handleScroll = () => setScrollY(window.scrollY)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
@@ -29,16 +30,14 @@ export default function LandingPage() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white">
-                  Transform Your Body, Transform Your Life
-                </h1>
-                <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl dark:text-gray-400">
+                <FlipWordsTitle />
+                {/* <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl dark:text-gray-400">
                   Join FitLife Fusion for personalized workouts, expert guidance, and a supportive community. Start your journey to a healthier you today.
-                </p>
+                </p> */}
               </div>
               <div className="space-x-4">
                 <Button size="lg" className="bg-green-400 text-black-600 hover:bg-green-600">Start Free Trial</Button>
-                <Button size="lg" variant="outline" className="text-black border-white hover:bg-white/20">Learn More</Button>
+                <Button size="lg" variant="outline" className="text-black border-white hover:bg-white/20">Create Account</Button>
               </div>
             </div>
           </div>
@@ -139,7 +138,7 @@ export default function LandingPage() {
                 >
                   <Card className="bg-white/10 backdrop-blur-lg border-none">
                     <CardHeader>
-                      <CardTitle  className="text-xl">{testimonial.name}</CardTitle>
+                      <CardTitle className="text-xl">{testimonial.name}</CardTitle>
                       <CardDescription className="text-gray-200">{testimonial.achievement}</CardDescription>
                     </CardHeader>
                     <CardContent>
