@@ -33,7 +33,9 @@ export async function createUser({ email, name, password, salt, id }: CreateUser
         create: {
           instagramUrl: '',
           twitterUrl: '',
-          githubUrl: '',
+          facebookUrl: '',
+          youtubeUrl: '', 
+          tiktokUrl: '',  
         },
       },
       updatedAt: new Date(),
