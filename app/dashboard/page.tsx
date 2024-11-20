@@ -3,7 +3,7 @@
 
 import Profile from "@/components/dashboard/Profile";
 import OnboardingWizard from "@/components/onboarding/page";
-import { useState } from "react";
+// import { useState } from "react";
 
 export default function DashboardHome() {
   // const [onboardingCompleted, setOnboardingCompleted] = useState(false);
@@ -15,7 +15,7 @@ export default function DashboardHome() {
   // if(true) {
   //   handleOnboardingComplete()
   // } 
-  let onboardingCompleted = true
+  const onboardingCompleted = true
   return (
     <div>
       {onboardingCompleted ?
