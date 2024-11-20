@@ -34,7 +34,6 @@ export async function createUser({ email, name, password, salt, id }: CreateUser
           instagramUrl: '',
           twitterUrl: '',
           githubUrl: '',
-          discordUrl: '',
         },
       },
       updatedAt: new Date(),
@@ -89,7 +88,7 @@ export async function updateUser(id: string, data: Partial<User & { socialLink: 
     throw error;
   }
 }
-export async function updateSocialLink(userId: string, platform: 'instagramUrl' | 'twitterUrl' | 'githubUrl' | 'discordUrl', link: string) {
+export async function updateSocialLink(userId: string, platform: 'instagramUrl' | 'twitterUrl' | 'discordUrl', link: string) {
   try {
     console.log('Updating social link for user:', userId, 'platform:', platform, 'link:', link)
     const updatedSocialLink = await prisma.socialLink.upsert({

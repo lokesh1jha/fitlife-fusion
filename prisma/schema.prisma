@@ -77,14 +77,11 @@ model User {
 model SocialLink {
   id        Int      @id @default(autoincrement())
   userId    String   @unique
-  facebook  String?
-  instagram String?
-  twitter   String?
-  linkedin  String?
-  youtube   String?
-  tiktok    String?
-  github    String?
-  website   String?
+  facebookUrl  String?
+  instagramUrl String?
+  twitterUrl   String?
+  youtubeUrl   String?
+  tiktokUrl    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
