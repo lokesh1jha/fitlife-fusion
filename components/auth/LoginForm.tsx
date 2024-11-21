@@ -43,15 +43,25 @@ export default function LoginForm() {
 	const handleSubmit = async (values: loginInput) => {
 		const email = values.email;
 		const password = values.password;
-		toast.promise(signIn("credentials", {
-			email, password,
-			callbackUrl: Routes.DASHBOARD,
-		  }), {
-			loading: "Logging in...",
-			success: "Logged in successfully",
-			error: "Failed to log in",
+	  
+		const result = await signIn("credentials", {
+		  email,
+		  password,
+		  redirect: false, // Prevent automatic redirection for manual handling
+		  callbackUrl: Routes.DASHBOARD,
 		});
-	};
+	  
+		if (result?.error) {
+		  toast.error("Failed to log in");
+		} else {
+		  toast.success("Logged in successfully");
+		  if (result?.url) {
+			// Redirect to the URL provided in the response
+			window.location.href = result.url;
+		  }
+		}
+	  };
+	  
 
 	return (
 		<form
